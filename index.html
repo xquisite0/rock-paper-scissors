@@ -10,18 +10,74 @@
     <script>
         function computerPlay() {
             let randomNumber = Math.floor(Math.random() * 3);
-            console.log(randomNumber);
-            let computerChoice;
             switch (randomNumber) {
                 case 0:
-                    computerChoice = 'Rock';
+                    return 'rock';
                     break;
                 case 1:
-                    computerChoice = 'Paper';
+                    return 'paper';
                     break;
                 case 2:
-                    computerChoice = 'Scissors';
+                    return 'scissors';
                     break;
+            }
+        }
+
+        function playGame(playerSelection, computerSelection) {
+            playerSelection = playerSelection.toLowerCase();
+            let winCase = `You Win! ${playerSelection} beats ${computerSelection}`;
+            let loseCase = `You Lose... ${computerSelection} beats ${playerSelection}`;
+            let tieCase =  `It's a draw! You both chose ${computerSelection}`
+            if (playerSelection === 'rock') {
+                if (computerSelection === 'scissors') {
+                    return winCase;
+                } else if (computerSelection === 'paper') {
+                    return loseCase;
+                } else {
+                    return tieCase;
+                }
+            } else if (playerSelection === 'paper') {
+                if (computerSelection === 'rock') {
+                    return winCase;
+                } else if (computerSelection === 'scissors') {
+                    return loseCase;
+                } else {
+                    return tieCase;
+                }
+            } else {
+                if (computerSelection === 'paper') {
+                    return winCase;
+                } else if (computerSelection === 'rock') {
+                    return loseCase;
+                } else {
+                    return tieCase;
+                }
+            }
+
+        }
+
+        function game() {
+            let playerPoints = 0;
+            let computerPoints = 0;
+
+            for (let i = 0; i < 5; i++) {
+                
+                let userChoice = prompt('What is your choice? Rock, paper or scissors?');
+                let result = playGame(userChoice, computerPlay());
+                console.log(result);
+                if (result.includes('Win')) {
+                    playerPoints++;
+                } else if (result.includes('Lose')) {
+                    computerPoints++;
+                }
+            }
+
+            if (playerPoints > computerPoints) {
+                console.log(`You have won this game of 5! Your points: ${playerPoints}. Computer points: ${computerPoints}`);
+            } else if (playerPoints < computerPoints) {
+                console.log(`You have lost this game of 5! Your points: ${playerPoints}. Computer points: ${computerPoints}`)
+            } else {
+                console.log(`It's a draw! Both of you have the same points of ${playerPoints}`);
             }
         }
     </script>
