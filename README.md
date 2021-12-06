@@ -1,1 +1,2 @@
 # rock-paper-scissors
+Project that utilizes mainly Javascript to create a game where users interact with a user interface to play rock, paper, scissors with a computer with randomly generated options. First to 5 wins. Utilizes basic JS to query for elements and utilizes functions.
