@@ -7,7 +7,34 @@
     <title>Document</title>
 </head>
 <body>
+    <div>A simple game of rock, paper or scissors to 5, to determine the fate of the universe... will computers prevail? Or will you? Find out now!</div>
+    <br>
+    <div>Choose: </div>
+    <button>Rock</button>
+    <button>Paper</button>
+    <button>Scissors</button>
+    <div id='results'></div>
+    <br>
+    <div id='playerPoints'></div>
+    <div id='computerPoints'></div>
+    <br>
+    <div id='winner'></div>
+
     <script>
+        let playerPoints = 0;
+        let computerPoints = 0;
+        
+        buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.addEventListener('click', evt => {
+                let resultsDiv = document.querySelector('#results');
+                let results = playGame(evt.target.textContent, computerPlay());
+                resultsDiv.textContent = results;
+                game(results);
+            });
+        })
+
+        
         function computerPlay() {
             let randomNumber = Math.floor(Math.random() * 3);
             switch (randomNumber) {
@@ -25,8 +52,8 @@
 
         function playGame(playerSelection, computerSelection) {
             playerSelection = playerSelection.toLowerCase();
-            let winCase = `You Win! ${playerSelection} beats ${computerSelection}`;
-            let loseCase = `You Lose... ${computerSelection} beats ${playerSelection}`;
+            let winCase = `You Win! Your choice of ${playerSelection} beats computer's ${computerSelection}`;
+            let loseCase = `You Lose... Computer's choice of ${computerSelection} beats your choice of ${playerSelection}`;
             let tieCase =  `It's a draw! You both chose ${computerSelection}`
             if (playerSelection === 'rock') {
                 if (computerSelection === 'scissors') {
@@ -56,29 +83,27 @@
 
         }
 
-        function game() {
-            let playerPoints = 0;
-            let computerPoints = 0;
-
-            for (let i = 0; i < 5; i++) {
-                
-                let userChoice = prompt('What is your choice? Rock, paper or scissors?');
-                let result = playGame(userChoice, computerPlay());
-                console.log(result);
-                if (result.includes('Win')) {
-                    playerPoints++;
-                } else if (result.includes('Lose')) {
-                    computerPoints++;
-                }
+        function game(result) {
+            
+            if (result.includes('Win')) {
+                playerPoints++;
+            } else if (result.includes('Lose')) {
+                computerPoints++;
             }
+            playerPointsDiv = document.querySelector('#playerPoints');
+            playerPointsDiv.textContent = `Your points: ${playerPoints}`;
+            computerPointsDiv = document.querySelector('#computerPoints');
+            computerPointsDiv.textContent = `Computer points: ${computerPoints}`;
 
-            if (playerPoints > computerPoints) {
-                console.log(`You have won this game of 5! Your points: ${playerPoints}. Computer points: ${computerPoints}`);
-            } else if (playerPoints < computerPoints) {
-                console.log(`You have lost this game of 5! Your points: ${playerPoints}. Computer points: ${computerPoints}`)
-            } else {
-                console.log(`It's a draw! Both of you have the same points of ${playerPoints}`);
+            let winner = ''
+
+            if (playerPoints === 5) {
+                winner = `You have won this game! Refresh to restart!`;
+            } else if (computerPoints === 5) {
+                winner = `You have lost this game of 5! Refresh to restart!`
             }
+            winnerDiv = document.querySelector('#winner');
+            winnerDiv.textContent = winner;
         }
     </script>
 </body>
